@@ -1,48 +1,46 @@
 package calculator;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
-
-class StringCalculatorTest {
-    private StringCalculator stringCalculator;
+public class StringCalculatorTest {
+    private StringCalculator cal;
 
     @BeforeEach
     void setup(){
-        stringCalculator = new StringCalculator();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"2,3,+,5","5,4,*,20","20,2,/,10"})
-    void calculateTest(int number1, int number2, String sign, int result){
-        assertThat(stringCalculator.calculate(number1,number2,sign)).isEqualTo(result);
+        cal = new StringCalculator();
     }
 
     @Test
-    void excuteTest(){
-        String[] arr = new String[]{"2","+","3","*","4","/","2"};
-        assertThat(stringCalculator.excute(arr)).isEqualTo(10);
+    void testSplit(){
+        String[] result = cal.split(null);
+        Assertions.assertArrayEquals(new String[]{},result);
     }
 
     @Test
-    void calculatorTest(){
-        assertThat(stringCalculator.calculator("2 + 3 * 4 / 2")).isEqualTo(10);
+    void testSplitWhenComma(){
+        String[] result = cal.split("1,2,3,");
+        Assertions.assertArrayEquals(new String[]{"1","2","3"},result);
     }
 
     @Test
-    void isCalculateException(){
-        assertThatIllegalArgumentException().isThrownBy(()->{
-            stringCalculator.calculate(2,3,"??");
-            
-        });
-
-
+    void testSplitWhenNewLine(){
+        String[] result = cal.split("1\n2\n3,");
+        Assertions.assertArrayEquals(new String[]{"1","2","3"},result);
     }
+
+    @Test
+    void testToInt(){
+        int[] result = cal.toInt(new String[]{"1","2","3"});
+        Assertions.assertArrayEquals(new int[]{1,2,3},result);
+
+        result = cal.toInt(new String[]{});
+        Assertions.assertArrayEquals(new int[]{},result);
+
+        result = cal.toInt(null);
+        Assertions.assertArrayEquals(new int[]{},result);
+    }
+
 
 }
