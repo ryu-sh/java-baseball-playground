@@ -3,15 +3,15 @@ package baseball;
 public enum BallStatus {
     BALL, STRIKE, NOTHING;
 
-    public boolean isNothing() {
+    public boolean isNotNothing() {
         return this != NOTHING;
     }
 
     public boolean isStrike() {
-        return this != STRIKE;
+        return this == STRIKE;
     }
 
     public boolean isBall() {
-        return this != BALL;
+        return this == BALL;
     }
 }

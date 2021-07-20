@@ -31,7 +31,7 @@ public class Balls {
 
     public BallStatus play(Ball userBall) {
        return balls.stream().map(answer -> answer.play(userBall))
-                .filter(BallStatus::isNothing)
+                .filter(BallStatus::isNotNothing)
                 .findFirst()
                 .orElse(BallStatus.NOTHING);
     }
